@@ -46,6 +46,7 @@ def is_storm(condition, wind_kph, precip_mm, pressure_mb):
         return True
     return False
 
+
 if __name__ == "__main__":
 
     get_weather_data()
