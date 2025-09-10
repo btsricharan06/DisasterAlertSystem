@@ -56,4 +56,3 @@ def sendSMS(sender_id, message, phone_number):
 
 
 
-sendSMS('')
