@@ -41,7 +41,6 @@ def get_weather_data():
 #
 # send_sms('+91 99877 29556' ,"YOU ARE IN GRAVE DANGER GET TF OUT")
 
-
 def sendSMS(sender_id, message, phone_number):
     api_key = 'tQocwqPh1XNFA4nkOdbSKE3e9yzG2rH5mf7RlVMDTJsuLYWj6pUr38dLWk9Ou0AnKRasIgqMZx2NmDc7'
     url = "https://www.fast2sms.com/dev/bulkV2"
