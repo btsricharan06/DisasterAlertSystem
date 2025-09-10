@@ -1,6 +1,5 @@
 import requests
 
-
 def get_weather_data():
     API_KEY = 'a89a60089af649be843133648251009'
     CITY = input('Enter the region name: ')
@@ -47,37 +46,7 @@ def is_storm(condition, wind_kph, precip_mm, pressure_mb):
         return True
     return False
 
-'''
-def send_sms_alerts(city, condition, wind_kph, precip_mm, pressure_mb):
-    ACCOUNT_SID = 'your_account_sid_here'
-    AUTH_TOKEN = 'your_auth_token_here'
-    FROM_NUMBER = '+1234567890'
 
-    client = Client(ACCOUNT_SID, AUTH_TOKEN)
-
-    recipients = [
-        '+19876543210',
-        '+10987654321'
-    ]
-
-    message_body = (
-        f"⚠️ Storm Alert for {city}!\n"
-        f"Condition: {condition}\n"
-        f"Wind Speed: {wind_kph} kph\n"
-        f"Precipitation: {precip_mm} mm\n"
-        f"Pressure: {pressure_mb} mb\n"
-        "Stay safe and take precautions!"
-    )
-
-    for number in recipients:
-        message = client.messages.create(
-            body=message_body,
-            from_=FROM_NUMBER,
-            to=number
-        )
-        print(f"📩 Alert sent to {number}: SID {message.sid}")
-
-'''
 if __name__ == "__main__":
 
     get_weather_data()
