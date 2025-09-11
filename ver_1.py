@@ -9,9 +9,9 @@ import joblib
 import streamlit as st
 
 # Configuring API and path
-API_KEY = "73a446100bca4ea68dc100105251109"  # replace with your key
+API_KEY = "73a446100bca4ea68dc100105251109"  
 MODEL_PATH = "storm_rf_model.joblib"
-DAYS_HISTORY = 7   # only last 7 days (WeatherAPI free tier)
+DAYS_HISTORY = 7   
 CITIES = ["Mumbai", "Delhi", "Bengaluru", "Chennai", "Kolkata"]
 
 # ---------------------------
