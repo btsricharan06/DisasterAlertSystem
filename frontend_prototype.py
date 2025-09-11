@@ -145,6 +145,5 @@ def main():
             st.success(f"✅ No storm predicted in {city}. Conditions look stable.")
 
 
-
 if __name__ == "__main__":
     main()

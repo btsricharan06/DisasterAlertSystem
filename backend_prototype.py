@@ -30,7 +30,9 @@ def fetch_historical_weather(city, date):
         "pressure_mb": 1013,
     }
 
-
+# ---------------------------
+# Build Features for ML
+# ---------------------------
 def build_features(df, past_n=3):
     df = df.sort_values("date").reset_index(drop=True)
     df["temp_diff"] = df["temp_max"] - df["temp_min"]
@@ -57,7 +59,9 @@ def build_features(df, past_n=3):
     df = df.fillna(method="bfill").fillna(method="ffill")
     return df
 
-
+# ---------------------------
+# Predict Storm using ML Model
+# ---------------------------
 def predict_storm(df_features):
     clf, feature_cols, imputer = joblib.load(MODEL_PATH)
     for col in feature_cols:
@@ -69,9 +73,8 @@ def predict_storm(df_features):
     storm_prob = clf.predict_proba(X_imputed)[0][1]
     return storm_pred, storm_prob
 
-
 # ---------------------------
-# Storm Simulation Function
+# Storm Simulation Function (Enhanced)
 # ---------------------------
 def simulate_storm_test(city):
     today = datetime.now().strftime("%Y-%m-%d")
@@ -87,8 +90,34 @@ def simulate_storm_test(city):
     }
 
     st.subheader("🧪 Storm Simulation Test")
-    st.json(fake_weather)   # ✅ show fake weather like normal data
+
+    # Display weather in clean markdown
+    weather_md = f"""
+**Date:** {fake_weather['date']}  
+**Max Temp:** {fake_weather['temp_max']} °C  
+**Min Temp:** {fake_weather['temp_min']} °C  
+**Precipitation:** {fake_weather['precip_mm']} mm  
+**Wind Speed:** {fake_weather['windspeed']} kph  
+**Humidity:** {fake_weather['humidity']} %  
+**Pressure:** {fake_weather['pressure_mb']} mb  
+"""
+    st.markdown(weather_md)
+
     st.error(f"⚠️ ALERT: Simulated upcoming storm detected in {city}! Take precautions.")
+
+    # ---------------------------
+    # Evacuation & Safety Guidelines
+    # ---------------------------
+    st.markdown("### 🏠 Safety & Evacuation Guidelines")
+    st.markdown("""
+- **🌧️ Stay Indoors:** Avoid going outside unless absolutely necessary.  
+- **🏡 Secure Your Home:** Close windows, doors, and secure loose objects.  
+- **🛒 Emergency Kit:** Keep essentials ready — water, food, flashlight, batteries, first-aid kit.  
+- **📡 Stay Updated:** Monitor weather alerts via reliable sources.  
+- **🚫 Avoid Flooded Areas:** Do not drive or walk through flooded streets.  
+- **📱 Communication:** Keep mobile phones charged and maintain contact with family and neighbors.  
+- **🚨 Evacuation:** If authorities advise evacuation, leave early and follow designated routes.
+""")
 
 # ---------------------------
 # Main App
@@ -116,13 +145,23 @@ def main():
         storm, prob = predict_storm(df_feat)
 
         st.subheader(f"📍 Weather Details for {city}")
-        st.json(weather)
+
+        weather_md = f"""
+        **Date:** {weather['date']}  
+        **Max Temp:** {weather['temp_max']} °C  
+        **Min Temp:** {weather['temp_min']} °C  
+        **Precipitation:** {weather['precip_mm']} mm  
+        **Wind Speed:** {weather['windspeed']} kph  
+        **Humidity:** {weather['humidity']} %  
+        **Pressure:** {weather['pressure_mb']} mb  
+        """
+        st.markdown(weather_md)
+
         st.info(f"🌩️ Storm probability for {city}: {prob:.2f}")
         if storm:
             st.error(f"⚠️ Storm likely in {city}!")
         else:
             st.success(f"✅ No storm predicted in {city}.")
-
 
 if __name__ == "__main__":
     main()
